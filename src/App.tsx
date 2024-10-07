@@ -1,12 +1,22 @@
-import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom";
 import './App.css'
+import Home from "./components/perso/Home";
+import About from "./components/perso/About";
+import { Routes, Route } from "react-router-dom";
 
 
 function App() {
 
   return (
-    <h1>React: react-router-dom</h1>
+    <div className="App">
+      <h1>
+        Learning React: <span className="italic text-purple-500">[react-router-dom]</span>
+      </h1>
+      <Routes>
+        <Route path="/" element={<Home />}></Route>
+        <Route path="about" element={<About />}></Route>
+      </Routes>
+    </div>
   );
 }
 
-export default App
+export default App;
