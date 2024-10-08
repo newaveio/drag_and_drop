@@ -1,26 +1,24 @@
 import './App.css'
-import Home from "./components/perso/Home";
-import About from "./components/perso/About";
-import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/perso/Navbar";
-import OrderSummary from './components/perso/OrderSummary';
 import YTWidget from './components/widgets/yt-widget';
+import { DragDropContext, Droppable, Draggable, DropResult, DroppableProvided, DraggableProvided } from "react-beautiful-dnd";
+import { useState } from "react";
+
+interface Widget {
+  id: number;
+  content: JSX.Element | null;
+}
 
 function App() {
 
   return (
     <>
-      <div className="Navbar">
+      <div className="mb-6">
         <Navbar></Navbar>
       </div>
       <div className="App">
-        <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="about" element={<About />}></Route>
-          <Route path="order-summary" element={<OrderSummary/>}></Route>
-        </Routes>
+
       </div>
-        <YTWidget/>
     </>
   );
 }

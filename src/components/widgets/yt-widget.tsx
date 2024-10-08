@@ -1,16 +1,47 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import expand_icon from "../../assets/maximize.svg";
+import "./yt-widget.css";
 
 const YTWidget: React.FC = () => {
+    const [isHovered, setIsHovered] = useState(false);
+    // const [showText, setShowText] = useState(false);
+
+
+    // useEffect(() => {
+    //     let textTimer: NodeJS.Timeout;
+    //     if (isHovered) {
+    //         setShowText(true);
+    //         textTimer = setTimeout(() => {
+    //             setShowText(false);
+    //         }, 2000);
+    //     } else {
+    //         setShowText(false);
+    //     }
+    //     return () => {
+    //         clearTimeout(textTimer);
+    //     }
+    // }, [isHovered]);
+
     return (
-        <div className="max-w-xs mx-auto bg-white rounded-xl shadow-md overflow-hidden">
-            <div className="bg-indigo-500 p-4">
-                <h2 className="text-white text-lg font-semibold">Widget Header</h2>
+        <div
+            className="widget-container"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        >
+            <div className="widget-header">
+                <div className="flex-1">
+                    <h2>Youtube</h2>
+                </div>
+                <div className="flex items-center">
+                    {/* {showText && <span className="expand-text">Expand Widget</span>} */}
+                    <img src={expand_icon} alt="expand-icon" className={isHovered ? "expand" : ""} />
+                </div>
             </div>
-            <div className="p-4">
-                <p className="text-gray-700">Widget Body</p>
+            <div className="widget-body">
+                <p>Widget Body</p>
             </div>
-            <div className="bg-gray-100 p-4">
-                <p className="text-gray-500">Widget Footer</p>
+            <div className="widget-footer">
+                <p>Widget Footer</p>
             </div>
         </div>
     )

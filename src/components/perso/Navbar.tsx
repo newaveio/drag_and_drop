@@ -15,7 +15,7 @@ const Navbar: React.FC = () => {
                     <div 
                         className="text-white text-lg font-bold cursor-pointer"
                         onClick={() => navigate("/")}>
-                            react-router-dom
+                            Griddy
                     </div>
                     <div className="space-x-4">
                         <NavLink to="/" className={navLinkStyles}>Home</NavLink>
