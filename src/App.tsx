@@ -2,20 +2,26 @@ import './App.css'
 import Home from "./components/perso/Home";
 import About from "./components/perso/About";
 import { Routes, Route } from "react-router-dom";
-
+import Navbar from "./components/perso/Navbar";
+import OrderSummary from './components/perso/OrderSummary';
+import YTWidget from './components/widgets/yt-widget';
 
 function App() {
 
   return (
-    <div className="App">
-      <h1>
-        Learning React: <span className="italic text-purple-500">[react-router-dom]</span>
-      </h1>
-      <Routes>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="about" element={<About />}></Route>
-      </Routes>
-    </div>
+    <>
+      <div className="Navbar">
+        <Navbar></Navbar>
+      </div>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="about" element={<About />}></Route>
+          <Route path="order-summary" element={<OrderSummary/>}></Route>
+        </Routes>
+      </div>
+        <YTWidget/>
+    </>
   );
 }
 
