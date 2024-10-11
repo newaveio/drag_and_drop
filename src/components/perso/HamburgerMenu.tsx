@@ -1,22 +1,32 @@
 import React, { useState } from "react";
 import { GridContextProvider, GridDropZone, GridItem, swap } from "react-grid-dnd";
 import "./HamburgerMenu.css";
+import menuIcon from "../../assets/menu.svg";
 
 const HamburgerMenu: React.FC = () => {
-    const [menuItems, setMenuItems] = useState<number[]>([17, 18, 19, 20]);
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
-
-    const onMenuChange = (_sourceId: string, sourceIndex: number, targetId: string, targetIndex: number) => {
-        const nextState = swap(menuItems, sourceIndex, targetIndex);
-        setMenuItems(nextState);
-    };
+    const menuItems: number[] = [17, 18, 19, 20];
 
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
     };
 
     return (
-        
+        <>
+            <div className={`menu ${menuOpen ? "open" : ""}`}>
+                <div className="hamburger-icon" onClick={toggleMenu}>
+                    <img src={menuIcon} alt="menu icon" />
+                </div>
+                <div className="menu-items">
+                    {menuItems.map((item: number) => (
+                        <div key={item} className="menu-item">
+                            {item}
+                        </div>
+                    ))}
+                </div>
+            </div>
+            <div className={`overlay ${menuOpen ? "show" : ""}`} onClick={toggleMenu}></div>
+        </>
     );
 }
 

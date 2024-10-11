@@ -21,4 +21,5 @@
   cursor: grab;
   height: 100px; /* Fixed height for each grid item */
   width: 100px;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }

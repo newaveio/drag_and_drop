@@ -1,0 +1,24 @@
+.gridDropZone {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 0 100px;
+}
+  
+  .griditemUI {
+    border: 1px solid #ccc;
+    padding: 20px;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    height: 100px; /* Fixed height for each grid item */
+    width: 100px;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+  
