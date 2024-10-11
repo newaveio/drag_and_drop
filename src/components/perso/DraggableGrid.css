@@ -1,3 +1,12 @@
+.grid-container {
+  padding: 20px;
+  background-color: lightpink;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
 .gridDropZone {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -6,7 +15,8 @@
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 8px;
-    margin: 0 100px;
+    width: 100%;
+    max-width: 800px;
 }
   
   .griditemUI {
@@ -21,4 +31,3 @@
     width: 100px;
     box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
-  

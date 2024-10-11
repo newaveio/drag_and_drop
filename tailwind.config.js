@@ -7,6 +7,9 @@ export default {
   ],
   theme: {
   	extend: {
+		boxShadow: {
+			'inner-blue': 'inset 0 2px 4px 0 rgba(59, 130, 246, 0.6), inset 0 -2px 4px 0 rgba(59, 130, 246, 0.6), inset 2px 0 4px 0 rgba(59, 130, 246, 0.6), inset -2px 0 4px 0 rgba(59, 130, 246, 0.6)'
+		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
