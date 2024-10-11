@@ -1,26 +1,17 @@
-/* .App {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-} */
+/* App.css*/
 
-.card {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-}
-.grid-container {
+.gridDropZone {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  gap: 10px;
-  width: 300px;
-  height: 300px;
+  grid-template-columns: repeat(4, 1fr); /* Adjust the number of columns as needed */
+  gap: 10px; /* Space between grid items */
+  padding: 10px; /* Padding around the grid */
+  background-color: #f9f9f9; /* Background color for the grid */
+  border: 1px solid #ddd; /* Border around the grid */
+  border-radius: 8px; /* Rounded corners for the grid */
+  margin: 0 100px;
 }
 
-.grid-item {
+.griditemUI {
   border: 1px solid #ccc;
   padding: 20px;
   background-color: #f0f0f0;
@@ -28,5 +19,6 @@
   align-items: center;
   justify-content: center;
   cursor: grab;
-  height: 100px;
+  height: 100px; /* Fixed height for each grid item */
+  width: 100px;
 }

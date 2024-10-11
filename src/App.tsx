@@ -1,72 +1,45 @@
-import './App.css'
+import './App.css';
 import Navbar from "./components/perso/Navbar";
-// import YTWidget from './components/widgets/yt-widget';
-import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd";
 import React, { useState } from "react";
+import { GridContextProvider, GridDropZone, GridItem, swap } from "react-grid-dnd";
 
-interface Square {
-  id: string;
-  content: string;
-}
+const App: React.FC = () => {
+  const [items, setItems] = useState<number[]>([
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16
+  ]);
 
-const initialSquares: Square[] = Array.from({ length: 9}, (_, index) => ({
-  id: `square-${index}`,
-  content: `Square ${index + 1}`,
-}));
-
-function App() {
-  const [squares, setSquares] = useState<Square[]>(initialSquares);
-
-  const onDragEnd = (result: DropResult) => {
-    if(!result.destination) {
-      return ;
-    }
-
-    const reorderedSquares = Array.from(squares);
-    const [removed] = reorderedSquares.splice(result.source.index, 1);
-    reorderedSquares.splice(result.destination.index, 0, removed);
-
-    setSquares(reorderedSquares);
-  }
+  const onChange = (sourceId: string, sourceIndex: number, targetIndex: number, targetId: string) => {
+    const nextState = swap(items, sourceIndex, targetIndex);
+    setItems(nextState);
+  };
 
   return (
-
     <>
       <div className="mb-6">
-        <Navbar></Navbar>
+        <Navbar />
       </div>
-      {/* <div className="App">
-
-      </div> */}
-      <div className="layout__wrapper">
-        <div className="header">
-          <h1>Drag and Drop</h1>
-        </div>
-        <div className="card">
-        <DragDropContext onDragEnd={onDragEnd}>
-            <Droppable droppableId="grid" direction="horizontal">
-              {(provided) => (
-                <div className="grid-container" ref={provided.innerRef} {...provided.droppableProps}>
-                  {squares.map((square, index) => (
-                    <Draggable key={square.id} draggableId={square.id} index={index}>
-                      {(provided) => (
-                        <div
-                          className="grid-item"
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                        >
-                          {square.content}
-                        </div>
-                      )}
-                    </Draggable>
-                  ))}
-                  {provided.placeholder}
+      <div className="App">
+        <GridContextProvider onChange={onChange as any}>
+          <GridDropZone
+            id="items"
+            boxesPerRow={4}
+            rowHeight={100}
+            style={{ height: "400px" }}
+          >
+            {items.map((item) => (
+              <GridItem key={item} className="griditemUI">
+                <div
+                  style={{
+                    width: "100%",
+                    height: "100%"
+                  }}
+                >
+                  {item}
                 </div>
-              )}
-            </Droppable>
-          </DragDropContext>
-        </div>
+              </GridItem>
+            ))}
+          </GridDropZone>
+        </GridContextProvider>
       </div>
     </>
   );
