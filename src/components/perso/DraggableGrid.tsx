@@ -22,10 +22,10 @@ const DraggableGrid: React.FC = () => {
                     boxesPerRow={4}
                     rowHeight={100}
                     style={{ height: "400px" }}
-                    className="gridDropZone"
+                    className="grid-drop-zone"
                 >
                     {items.map((item) => (
-                        <GridItem key={item} className="griditemUI">
+                        <GridItem key={item} className="grid-item">
                             <div
                                 style={{
                                     width: "100%",

@@ -7,7 +7,7 @@
   height: 100vh;
 }
 
-.gridDropZone {
+.grid-drop-zone {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
@@ -19,7 +19,7 @@
     max-width: 800px;
 }
   
-  .griditemUI {
+  .grid-item {
     border: 1px solid #ccc;
     padding: 20px;
     background-color: #f0f0f0;
