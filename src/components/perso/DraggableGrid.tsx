@@ -1,13 +1,23 @@
-// components/perso/DraggableGrid.tsx
 import React, { useState } from "react";
 import { GridContextProvider, GridDropZone, GridItem, swap } from "react-grid-dnd";
 import "./DraggableGrid.css";
 
-const DraggableGrid: React.FC = () => {
-    const initialItems:number[] = [1, 2, 3, 4, 5, 6, 7, 8];
-    const totalCells: number = 16;
+type Item = {
+    id: number;
+    width: number;
+    height: number;
+};
 
-    const [items, setItems] = useState<number[]>(initialItems)
+const DraggableGrid: React.FC = () => {
+    const initialItems: Item[] = [
+        { id: 1, width: 1, height: 1 },
+        { id: 2, width: 1, height: 1 },
+        { id: 3, width: 1, height: 1 },
+        { id: 4, width: 2, height: 2 },
+        { id: 5, width: 2, height: 2 }
+    ];
+
+    const [items, setItems] = useState<Item[]>(initialItems);
 
     const onChange = (_sourceId: string, sourceIndex: number, targetIndex: number, _targetId: string) => {
         const nextState = swap(items, sourceIndex, targetIndex);
@@ -25,14 +35,12 @@ const DraggableGrid: React.FC = () => {
                     className="grid-drop-zone"
                 >
                     {items.map((item) => (
-                        <GridItem key={item} className="grid-item">
-                            <div
-                                style={{
-                                    width: "100%",
-                                    height: "100%"
-                                }}
-                            >
-                                {item}
+                        <GridItem
+                            key={item.id}
+                            className={`grid-item ${item.id <= 3 ? 'small-item' : 'large-item'}`}
+                        >
+                            <div className="grid-item-content">
+                                {item.id}
                             </div>
                         </GridItem>
                     ))}
