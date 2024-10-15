@@ -1,51 +1,96 @@
 import React, { useState } from "react";
-import { GridContextProvider, GridDropZone, GridItem, swap } from "react-grid-dnd";
 import "./DraggableGrid.css";
 
 type Item = {
     id: number;
-    width: number;
-    height: number;
+    className: string;
+    position: { row: number; col: number };
+};
+
+const generateRandomPosition = (existingPositions: Set<string>): { row: number; col: number } => {
+    let row, col, position;
+    do {
+        row = Math.floor(Math.random() * 4) + 1;
+        col = Math.floor(Math.random() * 4) + 1;
+        position = `${row}-${col}`;
+    } while (existingPositions.has(position));
+    existingPositions.add(position);
+    return { row, col };
 };
 
 const DraggableGrid: React.FC = () => {
+    const existingPositions = new Set<string>(["1-1", "1-2"]);
     const initialItems: Item[] = [
-        { id: 1, width: 1, height: 1 },
-        { id: 2, width: 1, height: 1 },
-        { id: 3, width: 1, height: 1 },
-        { id: 4, width: 2, height: 2 },
-        { id: 5, width: 2, height: 2 }
+        { id: 1, className: "movable-item", position: { row: 1, col: 1 } },
+        { id: 2, className: "movable-item", position: { row: 1, col: 2 } },
+        ...Array.from({ length: 8 }).map((_, index) => ({
+            id: index + 3,
+            className: "movable-item",
+            position: generateRandomPosition(existingPositions)
+        }))
     ];
 
     const [items, setItems] = useState<Item[]>(initialItems);
 
-    const onChange = (_sourceId: string, sourceIndex: number, targetIndex: number, _targetId: string) => {
-        const nextState = swap(items, sourceIndex, targetIndex);
-        setItems(nextState);
+    const handleDragStart = (e: React.DragEvent<HTMLDivElement>, id: number) => {
+        e.dataTransfer.setData("text/plain", id.toString());
+    };
+
+    const handleDrop = (e: React.DragEvent<HTMLDivElement>, row: number, col: number) => {
+        e.preventDefault();
+        const id = parseInt(e.dataTransfer.getData("text/plain"), 10);
+        const targetItem = items.find(item => item.position.row === row && item.position.col === col);
+
+        let updatedItems = items.map(item =>
+            item.id === id ? { ...item, position: { row, col } } : item
+        );
+
+        if (targetItem) {
+            let newCol = targetItem.position.col + 1;
+            let newRow = targetItem.position.row;
+            if (newCol > 4) {
+                newCol = 1;
+                newRow += 1;
+            }
+            updatedItems = updatedItems.map(item =>
+                item.id === targetItem.id ? { ...item, position: { row: newRow, col: newCol } } : item
+            );
+        }
+
+        setItems(updatedItems);
+    };
+
+    const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
     };
 
     return (
         <div className="grid-container">
-            <GridContextProvider onChange={onChange as any}>
-                <GridDropZone
-                    id="items"
-                    boxesPerRow={4}
-                    rowHeight={100}
-                    style={{ height: "400px" }}
-                    className="grid-drop-zone"
-                >
-                    {items.map((item) => (
-                        <GridItem
-                            key={item.id}
-                            className={`grid-item ${item.id <= 3 ? 'small-item' : 'large-item'}`}
+            <div className="grid">
+                {Array.from({ length: 4 }).map((_, row) =>
+                    Array.from({ length: 4 }).map((_, col) => (
+                        <div
+                            key={`${row}-${col}`}
+                            className="grid-cell"
+                            onDrop={(e) => handleDrop(e, row + 1, col + 1)}
+                            onDragOver={handleDragOver}
                         >
-                            <div className="grid-item-content">
-                                {item.id}
-                            </div>
-                        </GridItem>
-                    ))}
-                </GridDropZone>
-            </GridContextProvider>
+                            {items.map(item =>
+                                item.position.row === row + 1 && item.position.col === col + 1 ? (
+                                    <div
+                                        key={item.id}
+                                        className={`grid-item ${item.className}`}
+                                        draggable
+                                        onDragStart={(e) => handleDragStart(e, item.id)}
+                                    >
+                                        <div className="grid-item-content">{item.id}</div>
+                                    </div>
+                                ) : null
+                            )}
+                        </div>
+                    ))
+                )}
+            </div>
         </div>
     );
 };
