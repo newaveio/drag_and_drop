@@ -5,17 +5,7 @@ type Item = {
     id: number;
     className: string;
     position: { row: number; col: number };
-};
-
-const generateRandomPosition = (existingPositions: Set<string>): { row: number; col: number } => {
-    let row, col, position;
-    do {
-        row = Math.floor(Math.random() * 4) + 1;
-        col = Math.floor(Math.random() * 4) + 1;
-        position = `${row}-${col}`;
-    } while (existingPositions.has(position));
-    existingPositions.add(position);
-    return { row, col };
+    size?: { rows: number; cols: number };
 };
 
 const findNextPosition = (row: number, col: number, maxCols: number) => {
@@ -29,15 +19,10 @@ const findNextPosition = (row: number, col: number, maxCols: number) => {
 };
 
 const DraggableGrid: React.FC = () => {
-    // const existingPositions = new Set<string>(["1-1", "1-2"]);
     const initialItems: Item[] = [
         { id: 1, className: "movable-item", position: { row: 1, col: 1 } },
         { id: 2, className: "movable-item", position: { row: 1, col: 2 } },
-        // ...Array.from({ length: 4 }).map((_, index) => ({
-        //     id: index + 3,
-        //     className: "movable-item",
-        //     position: generateRandomPosition(existingPositions)
-        // }))
+        // { id: 3, className: "movable-item large-item", position: { row: 3, col: 3}, size: { rows: 2, cols: 2} }
     ];
 
     const [items, setItems] = useState<Item[]>(initialItems);
