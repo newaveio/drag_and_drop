@@ -5,8 +5,6 @@ type Item = {
     id: number;
     className: string;
     position: { row: number; col: number };
-    rowSpan?: number;
-    colSpan?: number;
 };
 
 const generateRandomPosition = (existingPositions: Set<string>): { row: number; col: number } => {
@@ -31,16 +29,15 @@ const findNextPosition = (row: number, col: number, maxCols: number) => {
 };
 
 const DraggableGrid: React.FC = () => {
-    const existingPositions = new Set<string>(["1-1", "1-2"]);
+    // const existingPositions = new Set<string>(["1-1", "1-2"]);
     const initialItems: Item[] = [
         { id: 1, className: "movable-item", position: { row: 1, col: 1 } },
         { id: 2, className: "movable-item", position: { row: 1, col: 2 } },
-        { id: 11, className: "movable-item", position: { row: 1, col: 3}, rowSpan: 2, colSpan: 2},
-        ...Array.from({ length: 8 }).map((_, index) => ({
-            id: index + 3,
-            className: "movable-item",
-            position: generateRandomPosition(existingPositions)
-        }))
+        // ...Array.from({ length: 4 }).map((_, index) => ({
+        //     id: index + 3,
+        //     className: "movable-item",
+        //     position: generateRandomPosition(existingPositions)
+        // }))
     ];
 
     const [items, setItems] = useState<Item[]>(initialItems);
@@ -117,9 +114,6 @@ const DraggableGrid: React.FC = () => {
                                         className={`grid-item ${item.className}`}
                                         draggable
                                         onDragStart={(e) => handleDragStart(e, item.id)}
-                                        style={{
-                                            gridColumn: `span ${item.colSpan || 1}`
-                                        }}
                                     >
                                         <div className="grid-item-content">{item.id}</div>
                                     </div>
