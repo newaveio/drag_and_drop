@@ -5,8 +5,6 @@ type Item = {
     id: number;
     className: string;
     position: { row: number; col: number };
-    rowSpan?: number;
-    colSpan?: number;
 };
 
 const generateRandomPosition = (existingPositions: Set<string>): { row: number; col: number } => {
@@ -35,7 +33,6 @@ const DraggableGrid: React.FC = () => {
     const initialItems: Item[] = [
         { id: 1, className: "movable-item", position: { row: 1, col: 1 } },
         { id: 2, className: "movable-item", position: { row: 1, col: 2 } },
-        { id: 11, className: "movable-item", position: { row: 1, col: 3}, rowSpan: 2, colSpan: 2},
         ...Array.from({ length: 8 }).map((_, index) => ({
             id: index + 3,
             className: "movable-item",
@@ -73,12 +70,11 @@ const DraggableGrid: React.FC = () => {
             }
         }
 
-        // Check if the item is moved to the last column of the last row and if the position is already occupied
+        // Check if the item is moved to the last column of the last row
         const maxRow = Math.max(...updatedItems.map(item => item.position.row));
-        const isLastCellEmpty = !items.some(item => item.position.row === maxRow && item.position.col === maxCols);
-        if (!(row === maxRow && col === maxCols && isLastCellEmpty)) {
+        if (row === maxRow && col === maxCols) {
             updatedItems = updatedItems.map(item =>
-                item.id === id ? { ...item, position: { row, col } } : item
+                item.id === id ? { ...item, position: { row: row + 1, col: 1 } } : item
             );
         }
         
@@ -94,14 +90,7 @@ const DraggableGrid: React.FC = () => {
     
     return (
         <div className="grid-container">
-            <div 
-                className="grid" 
-                style={{ 
-                    gridTemplateColumns: `repeat(${maxCols}, 1fr)`, 
-                    gridTemplateRows: `repeat(${numRows}, 1fr)`,
-                    height: `${numRows * 100}px` // Adjust height dynamically
-                }}
-            >
+            <div className="grid">
                 {Array.from({ length: numRows }).map((_, row) =>
                     Array.from({ length: maxCols }).map((_, col) => (
                         <div
@@ -117,9 +106,6 @@ const DraggableGrid: React.FC = () => {
                                         className={`grid-item ${item.className}`}
                                         draggable
                                         onDragStart={(e) => handleDragStart(e, item.id)}
-                                        style={{
-                                            gridColumn: `span ${item.colSpan || 1}`
-                                        }}
                                     >
                                         <div className="grid-item-content">{item.id}</div>
                                     </div>
