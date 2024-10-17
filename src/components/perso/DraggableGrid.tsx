@@ -22,6 +22,9 @@ const DraggableGrid: React.FC = () => {
     const initialItems: Item[] = [
         { id: 1, className: "movable-item", position: { row: 1, col: 1 } },
         { id: 2, className: "movable-item", position: { row: 1, col: 2 } },
+        { id: 3, className: "movable-item", position: { row: 1, col: 3 } },
+        { id: 4, className: "movable-item", position: { row: 1, col: 4 } },
+        { id: 5, className: "movable-item", position: { row: 2, col: 2 } },
         // { id: 3, className: "movable-item large-item", position: { row: 3, col: 3}, size: { rows: 2, cols: 2} }
     ];
 
